@@ -1,0 +1,1 @@
+adb install -r -d app/build/outputs/apk/debug/app-debug.apk
