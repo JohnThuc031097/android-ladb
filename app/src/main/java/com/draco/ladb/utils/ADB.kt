@@ -11,10 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.draco.ladb.BuildConfig
 import com.draco.ladb.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.IOException
 import java.io.PrintStream
@@ -158,6 +155,7 @@ class ADB(private val context: Context) {
     /**
      * Start a death listener to restart the shell once it dies
      */
+    @OptIn(DelicateCoroutinesApi::class)
     private fun startShellDeathThread() {
         GlobalScope.launch(Dispatchers.IO) {
             shellProcess?.waitFor()

@@ -42,15 +42,10 @@ class HelpPreferenceFragment : PreferenceFragmentCompat() {
                     activity?.finish()
                 }
             }
-
-            getString(R.string.developer_key) -> openURL(getString(R.string.developer_url))
-            getString(R.string.source_key) -> openURL(getString(R.string.source_url))
-            getString(R.string.contact_key) -> openURL(getString(R.string.contact_url))
             getString(R.string.licenses_key) -> {
                 val intent = Intent(requireContext(), OssLicensesMenuActivity::class.java)
                 startActivity(intent)
             }
-
             else -> {
                 if (preference !is SwitchPreference && preference !is EditTextPreference) {
                     MaterialAlertDialogBuilder(requireContext())
@@ -64,16 +59,4 @@ class HelpPreferenceFragment : PreferenceFragmentCompat() {
         return super.onPreferenceTreeClick(preference)
     }
 
-    /**
-     * Open a URL for the user
-     */
-    private fun openURL(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        try {
-            startActivity(intent)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Snackbar.make(requireView(), getString(R.string.snackbar_intent_failed), Snackbar.LENGTH_SHORT).show()
-        }
-    }
 }
