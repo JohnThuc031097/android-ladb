@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="@string/settings">
@@ -14,39 +15,32 @@
             android:icon="@drawable/ic_baseline_home_repair_service_24"
             android:key="@string/auto_shell_key"
             android:summary="@string/auto_shell_summary"
-            android:title="@string/auto_shell_title"
-            android:visibility="gone" />
+            android:title="@string/auto_shell_title" />
         <SwitchPreference
             android:defaultValue="true"
             android:icon="@drawable/ic_baseline_home_repair_service_24"
             android:key="@string/auto_pair_key"
             android:summary="@string/auto_pair_summary"
-            android:title="@string/auto_pair_title"
-            android:visibility="gone" />
+            android:title="@string/auto_pair_title" />
         <SwitchPreference
             android:defaultValue="true"
             android:icon="@drawable/ic_baseline_home_repair_service_24"
             android:key="@string/auto_wireless_key"
             android:summary="@string/auto_wireless_summary"
-            android:title="@string/auto_wireless_title"
-            android:visibility="gone" />
+            android:title="@string/auto_wireless_title" />
         <EditTextPreference
             android:defaultValue="16384"
             android:icon="@drawable/ic_baseline_home_repair_service_24"
             android:key="@string/buffer_size_key"
             android:summary="@string/buffer_size_summary"
-            android:title="@string/buffer_size_title"
-            android:visibility="gone" />
+            android:title="@string/buffer_size_title" />
         <EditTextPreference
             android:icon="@drawable/ic_baseline_home_repair_service_24"
             android:key="@string/startup_command_key"
             android:summary="@string/startup_command_summary"
-            android:title="@string/startup_command_title"
-            android:visibility="gone" />
+            android:title="@string/startup_command_title" />
     </PreferenceCategory>
-    <PreferenceCategory
-        android:title="@string/troubleshooting"
-        android:visibility="gone">
+    <PreferenceCategory android:title="@string/troubleshooting">
         <Preference
             android:icon="@drawable/ic_baseline_help_24"
             android:title="@string/tutorial_title"
@@ -87,19 +81,16 @@
             android:icon="@drawable/ic_baseline_code_24"
             android:key="@string/source_key"
             android:summary="@string/source_summary"
-            android:title="@string/source_title"
-            android:visibility="gone" />
+            android:title="@string/source_title" />
         <Preference
             android:icon="@drawable/ic_baseline_email_24"
             android:key="@string/contact_key"
             android:summary="@string/contact_summary"
-            android:title="@string/contact_title"
-            android:visibility="gone" />
+            android:title="@string/contact_title" />
         <Preference
             android:icon="@drawable/ic_baseline_insert_drive_file_24"
             android:key="@string/licenses_key"
             android:summary="@string/licenses_summary"
-            android:title="@string/licenses_title"
-            android:visibility="gone" />
+            android:title="@string/licenses_title" />
     </PreferenceCategory>
 </PreferenceScreen>

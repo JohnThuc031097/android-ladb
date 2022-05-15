@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             }
             outputScrollView.post {
                 outputScrollView.fullScroll(ScrollView.FOCUS_DOWN)
-                command.requestFocus()
+//                command.requestFocus()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(command, InputMethod.SHOW_EXPLICIT)
             }

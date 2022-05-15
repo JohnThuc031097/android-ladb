@@ -103,7 +103,7 @@ class ADB(private val context: Context) {
                     1
                 )
                 debug("Waiting a few moments...")
-                Thread.sleep(3_000)
+                Thread.sleep(3000)
             } else {
                 debug("NOTE: Secure settings permission not granted yet")
                 debug("NOTE: After first pair, it will auto-grant")
