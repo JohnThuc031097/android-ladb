@@ -81,7 +81,8 @@ class ADB(private val context: Context) {
         val autoShell = sharedPrefs.getBoolean(context.getString(R.string.auto_shell_key), true)
         val autoPair = sharedPrefs.getBoolean(context.getString(R.string.auto_pair_key), true)
         val autoWireless = sharedPrefs.getBoolean(context.getString(R.string.auto_wireless_key), true)
-        val startupCommand = sharedPrefs.getString(context.getString(R.string.startup_command_key), "echo 'Success! ※\\(^o^)/※'")!!
+        val startupCommand = sharedPrefs.getString(context.getString(R.string.startup_command_key),
+            "adb shell am instrument -w -r -e debug false -e class com.thucnobita.autoapp.MainTest \\com.thucnobita.autoapp.test/androidx.test.runner.AndroidJUnitRunner")!!
 
         initializeADBShell(autoShell, autoPair, autoWireless, startupCommand)
     }
@@ -155,7 +156,6 @@ class ADB(private val context: Context) {
     /**
      * Start a death listener to restart the shell once it dies
      */
-    @OptIn(DelicateCoroutinesApi::class)
     private fun startShellDeathThread() {
         GlobalScope.launch(Dispatchers.IO) {
             shellProcess?.waitFor()
@@ -199,9 +199,8 @@ class ADB(private val context: Context) {
             println(pairingCode)
             flush()
         }
-
         /* Continue once finished pairing (or 10s elapses) */
-        pairShell?.waitFor(10, TimeUnit.SECONDS)
+        pairShell?.waitFor()
     }
 
     /**

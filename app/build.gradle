@@ -24,12 +24,6 @@ android {
         }
     }
     signingConfigs {
-        debug {
-            storeFile file('keystore.jks')
-            storePassword 'thucnobita@0310@1997'
-            keyPassword 'thucnobita@0310@1997'
-            keyAlias 'ladb-v1'
-        }
         release {
             storeFile file('keystore.jks')
             storePassword 'thucnobita@0310@1997'
@@ -38,9 +32,6 @@ android {
         }
     }
     buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
         release {
             signingConfig signingConfigs.release
         }

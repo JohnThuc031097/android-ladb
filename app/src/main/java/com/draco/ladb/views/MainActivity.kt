@@ -1,5 +1,6 @@
 package com.draco.ladb.views
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         command.setText(text)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -86,7 +88,21 @@ class MainActivity : AppCompatActivity() {
 
         /* Update the output text */
         viewModel.outputText.observe(this, Observer {
-            output.text = it
+            if (it.indexOf("INSTRUMENTATION_STATUS: test=loadTest",0) > 0 &&
+                it.indexOf("INSTRUMENTATION_STATUS_CODE: 1", 0) > 0) {
+                output.text = "=> Connect to AutoApp Ok"
+            } else if (it.indexOf("error: no device with transport id '1'", 0) > 0){
+                lifecycleScope.launch(Dispatchers.IO) {
+                    /* Unpair server and client */
+                    with(PreferenceManager.getDefaultSharedPreferences(applicationContext).edit()) {
+                        putBoolean(getString(R.string.paired_key), false)
+                        commit()
+                    }
+                    viewModel.adb.reset()
+                }
+            }else{
+                output.text = it
+            }
             outputScrollView.post {
                 outputScrollView.fullScroll(ScrollView.FOCUS_DOWN)
                 command.requestFocus()
@@ -105,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                 exitProcess(0)
             }
         })
-
+//
         /* Prepare progress bar, pairing latch, and script executing */
         viewModel.adb.ready.observe(this, Observer {
             if (it != true) {
@@ -178,7 +194,6 @@ class MainActivity : AppCompatActivity() {
                     lifecycleScope.launch(Dispatchers.IO) {
                         viewModel.adb.debug("Requesting additional pairing information")
                         viewModel.adb.pair(port, code)
-
                         callback?.run()
                     }
                 }
