@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
@@ -15,8 +16,6 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.io.IOException
 import java.io.PrintStream
-import java.lang.NumberFormatException
-import java.util.concurrent.TimeUnit
 
 class ADB(private val context: Context) {
     companion object {
@@ -95,8 +94,14 @@ class ADB(private val context: Context) {
             context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED
 
         if (autoWireless) {
-            debug("Enabling wireless debugging")
             if (secureSettingsGranted) {
+                debug("Enabling development settings")
+                Settings.Global.putInt(
+                    context.contentResolver,
+                    "development_settings_enabled",
+                    1
+                )
+                debug("Enabling wireless debugging")
                 Settings.Global.putInt(
                     context.contentResolver,
                     "adb_wifi_enabled",
