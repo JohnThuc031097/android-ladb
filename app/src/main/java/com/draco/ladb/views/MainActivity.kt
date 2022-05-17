@@ -88,10 +88,12 @@ class MainActivity : AppCompatActivity() {
 
         /* Update the output text */
         viewModel.outputText.observe(this, Observer {
-            if (it.indexOf("INSTRUMENTATION_STATUS: test=loadTest",0) > 0 &&
-                it.indexOf("INSTRUMENTATION_STATUS_CODE: 1", 0) > 0) {
-                output.text = "=> Connect to AutoApp Ok"
-            } else if (it.indexOf("error: no device with transport id '1'", 0) > 0){
+            if (it.indexOf("Successfully paired to localhost", 0) > 0){
+                lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.adb.sendToShellProcess("adb shell am instrument -w -r -e debug false -e class com.thucnobita.autoapp.MainTest \\com.thucnobita.autoapp.test/androidx.test.runner.AndroidJUnitRunner")
+                }
+            }else if (it.indexOf("error: no device with transport id '1'", 0) > 0 ||
+                it.indexOf("Failed: Wrong password or connection was dropped", 0) > 0){
                 lifecycleScope.launch(Dispatchers.IO) {
                     /* Unpair server and client */
                     with(PreferenceManager.getDefaultSharedPreferences(applicationContext).edit()) {
@@ -100,9 +102,13 @@ class MainActivity : AppCompatActivity() {
                     }
                     viewModel.adb.reset()
                 }
+            }else if (it.indexOf("INSTRUMENTATION_STATUS: test=loadTest",0) > 0 &&
+                it.indexOf("INSTRUMENTATION_STATUS_CODE: 1", 0) > 0) {
+                output.text = "=> Connect to AutoApp Ok"
             }else{
                 output.text = it
             }
+
             outputScrollView.post {
                 outputScrollView.fullScroll(ScrollView.FOCUS_DOWN)
 //                command.requestFocus()
@@ -217,6 +223,16 @@ class MainActivity : AppCompatActivity() {
             R.id.help -> {
                 val intent = Intent(this, HelpActivity::class.java)
                 startActivity(intent)
+                true
+            }
+            R.id.reset -> {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    with(PreferenceManager.getDefaultSharedPreferences(applicationContext).edit()) {
+                        putBoolean(getString(R.string.paired_key), false)
+                        commit()
+                    }
+                    viewModel.adb.reset()
+                }
                 true
             }
             R.id.share -> {

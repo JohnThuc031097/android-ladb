@@ -27,10 +27,10 @@
 
     <string name="paired_key">paired</string>
     <string name="port_hint">Port</string>
-    <string name="port_text">1234</string>
+    <string name="port_text" />
 
     <string name="code_hint">Pairing code</string>
-    <string name="code_text">123456</string>
+    <string name="code_text" />
 
     <string name="pair_title">Pairing information</string>
     <string name="pair_message">You can find the port and the 6-digit pairing code here: Settings -> Developer Settings -> Wireless Debugging. Open LADB and Settings using <b>Split Screen</b> to prevent the code from changing.</string>

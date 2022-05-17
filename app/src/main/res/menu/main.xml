@@ -27,7 +27,13 @@
         app:showAsAction="withText" />
     <item
         android:id="@+id/help"
+        android:icon="@drawable/ic_baseline_help_24"
         android:title="@string/help"
+        android:visible="false"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/reset"
+        android:title="@string/reset_title"
         app:showAsAction="withText"
         android:icon="@drawable/ic_baseline_help_24" />
 </menu>
